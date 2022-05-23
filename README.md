@@ -51,3 +51,8 @@ All these libraries can be easily installed using the Arduino IDE library manage
 # 3D printing
 
 Please refer to the `/3d_printing` directory.
+
+# Assembly layout
+This is the layout of the components on the board. Use this only for reference on roughly where you should fix the components to the board. I don't suggest using this for exact measurements as you should position the components where it is appropriate for your version of the project.
+
+[Layout PDF](./assembly_layout.pdf).
