@@ -12,6 +12,8 @@ There is a [video](https://youtu.be/pbuzLy1ktKM) associated with this repository
 
 You can find the Arduino sketch in the `/AutoWireCutterStripper` directory.
 
+- Make sure that the i2c address (`#define i2c_Address 0x3c`), corresponds to your OLED display i2c address, which you will find in the datasheet of your OLED display.
+
 
 ## Libraries needed
 
