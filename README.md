@@ -27,7 +27,7 @@ All these libraries can be easily installed using the Arduino IDE library manage
 
 # Components
 
-- [ESP32](https://www.amazon.co.uk/dp/B071P98VTG?ref_=cm_sw_r_cp_ud_dp_DDGQ5R6XVBCC7JBB04K3), for the micro-controller.
+- [ESP32](https://www.amazon.co.uk/dp/B071P98VTG?ref_=cm_sw_r_cp_ud_dp_DDGQ5R6XVBCC7JBB04K3), for the micro-controller. When uploading code, ensure that you hold down the on board BOOT button on the ESP32.
 - [12V 5A](https://www.amazon.co.uk/dp/B08GS7WM1Z?ref_=cm_sw_r_cp_ud_dp_QJHEPBDAWDEDX3JDRTGF) power supply.
 - [LM2596](https://www.amazon.co.uk/dp/B077VW4BTY?ref_=cm_sw_r_cp_ud_dp_1D9J5V36PP85VKDA2V49) or any step down converter, to convert 12V to 5V for the ESP32.
 - [Nema 17 stepper motor](https://www.amazon.co.uk/dp/B07K3Y5314?ref_=cm_sw_r_cp_ud_dp_RZY0XHJFQ6YN1HZXPX8X) (x3), two for the linear motion, one for the extruder.
