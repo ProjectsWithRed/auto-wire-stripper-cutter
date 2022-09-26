@@ -81,12 +81,12 @@ struct Component {
 };
 
 
-Component comps[] = {{0, 20, 40, 20, 0, 0, 0, 0},
+Component comps[] = { {0, 20, 40, 20, 0, 0, 0, 0},
                      {44, 20, 40, 20, 0, 0, 0, 0},
                      {88, 20, 40, 20, 0, 0, 0, 0},
                      {0, 44, 40, 20, 0, 0, 0, 0},
                      {44, 44, 40, 20, 0, 0, 0, 0},
-                     {88, 44, 40, 20, 0, 0, 0, 1}};
+                     {88, 44, 40, 20, 0, 0, 0, 1} };
 
 int numOfComps = sizeof(comps) / sizeof(comps[0]);
 
@@ -119,11 +119,11 @@ void loop() {
     boolean encBtnState = digitalRead(ENCODER_BTN_PIN);
 
     // Only update OLED screen if encoder is moved or pressed.
-    if((encPos != encoderLastPosMain) || (encBtnState != encBtnPrevStateMain)) {
+    if ((encPos != encoderLastPosMain) || (encBtnState != encBtnPrevStateMain)) {
         handleOLEDDisplay();
     }
-    
-    if(comps[START_BTN_INDEX].selected) {
+
+    if (comps[START_BTN_INDEX].selected) {
         runAutoCuttingStripping();
     }
 
@@ -131,12 +131,12 @@ void loop() {
     encBtnPrevStateMain = encBtnState;
 
 
-    if(!digitalRead(BTN1_PIN)) {
+    if (!digitalRead(BTN1_PIN)) {
         moveBlade(1);
     }
-    if(!digitalRead(BTN2_PIN)) {
+    if (!digitalRead(BTN2_PIN)) {
         moveBlade(-1);
-    }    
+    }
 }
 
 
@@ -148,16 +148,17 @@ void handleOLEDDisplay() {
     boolean btnState = digitalRead(ENCODER_BTN_PIN);
 
     // Handling whether encoder is changing cell or value of the cell.
-    if(!btnState && (btnState != encBtnPrevState)) {
+    if (!btnState && (btnState != encBtnPrevState)) {
         encBtnState = !encBtnState;
 
-        if(encBtnState) {
+        if (encBtnState) {
             encoderLastPos = encoderPos;
-        } else {
+        }
+        else {
             encoder.write(encoderLastPos * 4);
         }
     }
-    
+
     encBtnPrevState = btnState;
 
     if (!encBtnState) {
@@ -165,7 +166,7 @@ void handleOLEDDisplay() {
     }
 
     handleAllComponents();
-    
+
     display.display();
 }
 
@@ -173,59 +174,63 @@ void handleOLEDDisplay() {
 void drawWire() {
     display.drawLine(0, WIRE_STRAND_Y_POS, WIRE_STRAND_LENGTH, WIRE_STRAND_Y_POS, SH110X_WHITE);
     display.fillRect(WIRE_STRAND_LENGTH, 0, WIRE_INSULATION_WIDTH, WIRE_INSULATION_HEIGHT, SH110X_WHITE);
-    display.drawLine(WIRE_STRAND_LENGTH+WIRE_INSULATION_WIDTH, WIRE_STRAND_Y_POS, SCREEN_WIDTH, WIRE_STRAND_Y_POS, SH110X_WHITE);
+    display.drawLine(WIRE_STRAND_LENGTH + WIRE_INSULATION_WIDTH, WIRE_STRAND_Y_POS, SCREEN_WIDTH, WIRE_STRAND_Y_POS, SH110X_WHITE);
 }
 
 
 void handleAllComponents() {
-    for(int i = 0; i < numOfComps; i++) {
-        Component &comp = comps[i];
-        
-        if(encoderPos == i) {
+    for (int i = 0; i < numOfComps; i++) {
+        Component& comp = comps[i];
+
+        if (encoderPos == i) {
             comp.highlighted = true;
-            
-            if(encBtnState) {
-                if(!comp.selected && !comp.btn) {
+
+            if (encBtnState) {
+                if (!comp.selected && !comp.btn) {
                     encoder.write(comp.value * 4);
                 }
-                
+
                 comp.selected = true;
-                
+
                 int newEncPos = getEncoderPos();
                 comp.value = newEncPos;
-                
-            } else {
+
+            }
+            else {
                 comp.selected = false;
             }
-            
-        } else {
+
+        }
+        else {
             comp.highlighted = false;
             comp.selected = false;
         }
-        
+
         drawComponent(comp);
     }
 }
 
 
 void drawComponent(Component comp) {
-    if(comp.highlighted) {
+    if (comp.highlighted) {
         display.setTextColor(SH110X_BLACK, SH110X_WHITE);
         display.fillRect(comp.x, comp.y, comp.w, comp.h, SH110X_WHITE);
-        
+
         if (comp.selected) {
-            display.drawRect(comp.x-1, comp.y-1, comp.w+2, comp.h+2, SH110X_WHITE);
+            display.drawRect(comp.x - 1, comp.y - 1, comp.w + 2, comp.h + 2, SH110X_WHITE);
         }
-        
-    } else {
+
+    }
+    else {
         display.setTextColor(SH110X_WHITE, SH110X_BLACK);
         display.drawRect(comp.x, comp.y, comp.w, comp.h, SH110X_WHITE);
     }
 
-    if(comp.btn) {
+    if (comp.btn) {
         display.setTextSize(1);
         drawText("Start", comp.x + TEXT_OFFSET, comp.y + TEXT_OFFSET);
-    } else {
+    }
+    else {
         display.setTextSize(TEXT_SIZE);
         drawText(String(comp.value), comp.x + TEXT_OFFSET, comp.y + TEXT_OFFSET);
     }
@@ -239,14 +244,15 @@ void drawText(String text, int x, int y) {
 
 
 void runAutoCuttingStripping() {
-    if(CALIBRATION_MODE) {
+    if (CALIBRATION_MODE) {
         moveWire(comps[STRIPPING_LENGTH1_INDEX].value);
         cut();
-    } else {
+    }
+    else {
         cut();
         delay(DELAY_BETWEEN_CUTS);
 
-        for(int i = 0; i < comps[QUANTITY_INDEX].value; i++) {
+        for (int i = 0; i < comps[QUANTITY_INDEX].value; i++) {
             moveWire(comps[STRIPPING_LENGTH1_INDEX].value);
             strip();
             moveWire(comps[WIRE_LENGTH_INDEX].value);
@@ -254,7 +260,7 @@ void runAutoCuttingStripping() {
             moveWire(comps[STRIPPING_LENGTH2_INDEX].value);
             cut();
             delay(DELAY_BETWEEN_CUTS);
-        }   
+        }
     }
 
     comps[START_BTN_INDEX].selected = false;
