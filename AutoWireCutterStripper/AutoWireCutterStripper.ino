@@ -1,5 +1,7 @@
-#include <Stepper.h>
+#define ENCODER_DO_NOT_USE_INTERRUPTS
 #include <Encoder.h>
+
+#include <Stepper.h>
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
@@ -52,12 +54,12 @@ const int START_BTN_INDEX = 5;
 
 const int CUTTING_STEPS = 17750;  // Steps to move blade to fully cut the wire.
 const int STRIPPING_MULTIPLIER = 300;  // The chosen stripping depth value on the screen is multiplied by this value.
-const int WIRE_MOVEMENT_MULTI = 414;  // How much to move wire per unit on OLED, turn on CALIBRATION_MODE to find this value.
+const int WIRE_MOVEMENT_MULTI = 408;  // How much to move wire per unit on OLED, turn on CALIBRATION_MODE to find this value.
 const int DELAY_BETWEEN_CUTS = 100;  // Delay in ms between each cut in the quantity.
 
 // To calibrate the wire movement distance. Use the first cell to enter the distance in mm to move the wire.
 // Then adjust WIRE_MOVEMENT_MULTI to get the correct wire length.
-const boolean CALIBRATION_MODE = true;
+const boolean CALIBRATION_MODE = false;
 
 
 Stepper linMotSteppers(200, LINMOT_STEPPERS_DIR_PIN, LINMOT_STEPPERS_STEP_PIN);
